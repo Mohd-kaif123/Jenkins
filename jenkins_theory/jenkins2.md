@@ -89,3 +89,16 @@ In naye blocks ka breakdown:
 - success — sirf jab pipeline pass ho
 - failure — sirf jab pipeline fail ho, yahan email notification bhej rahe hain
 - Real world: Slack/email notifications, cleanup tasks, artifact archiving
+
+# ========================================================================================================================================================
+
+
+# 5. Execution Flow (Top to Bottom)
+
+- Jenkins job trigger hota hai (push, poll, ya manual)
+- Jenkins Jenkinsfile ko repo se checkout karta hai (agar SCM-based pipeline hai)
+- agent block decide karta hai kaunse machine pe chalega
+- environment variables set hote hain
+- Har stage sequentially chalta hai — agar ek fail hui to (by default) baaki stages skip ho jaati hain
+- Har stage ke andar steps top-to-bottom execute hote hain
+- Pipeline complete hone ke baad post block chalta hai (result ke hisaab se)
