@@ -1,0 +1,15 @@
+pipeline {
+    agent any
+    stages{
+        stage('Build') {
+            steps {
+                echo "building the application"
+                sh 'npm install'
+            }
+        }
+        stage('test') {
+            echo "Running test"
+            sh 'npm test'
+        }
+    }
+}
