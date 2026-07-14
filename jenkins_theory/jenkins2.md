@@ -94,7 +94,7 @@ pipeline {
 # ========================================================================================================================================================
 
 
-# 5. Execution Flow (Top to Bottom)
+# 5. Execution Flow (Top to Bottom):-
 
 - Jenkins job trigger hota hai (push, poll, ya manual)
 - Jenkins Jenkinsfile ko repo se checkout karta hai (agar SCM-based pipeline hai)
