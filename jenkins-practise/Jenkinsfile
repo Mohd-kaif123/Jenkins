@@ -1,3 +1,4 @@
+'''
 pipeline {
     agent any
     stages{
@@ -13,3 +14,40 @@ pipeline {
         }
     }
 }
+---
+
+pipeline {
+    agent any
+    stages{
+        stage('hello') {
+            steps {
+                echo "Hello Jenkins"
+            }
+        }
+    }
+}
+
+---
+
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                echo "checkout stage running"
+            }
+        }
+        stage('Build') {
+            steps {
+                echo "Build ho raha hai"
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Test ho raha hai"
+            }
+        }
+    }
+}
+'''
+
