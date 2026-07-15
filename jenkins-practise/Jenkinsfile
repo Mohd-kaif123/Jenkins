@@ -50,4 +50,27 @@ pipeline {
     }
 }
 '''
-
+'''
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                echo "Checkout is running"
+            }
+        }
+        stage('Build') {
+            steps {
+                echo "Build ho raha hai"
+                sh 'ls -la'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Test ho raha hai"
+                sh 'exit 1'
+            }
+        } 
+    }
+}
+'''
