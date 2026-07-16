@@ -116,4 +116,23 @@ pipeline {
         }
     }
 }
+
+pipeline {
+    agent any
+    stages {
+        stage('build') {
+            steps {
+                echo "Build ho raha hai"
+            }
+        }
+        stage('deploy') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo "Deploying to production"
+            }
+        }
+    }
+}
 '''
