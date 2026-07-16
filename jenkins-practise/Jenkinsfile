@@ -74,3 +74,46 @@ pipeline {
     }
 }
 '''
+
+'''
+pipeline {
+    agent any
+    environment {
+        APP_ENV = 'staging'
+    }
+    stages {
+        stage ('Build') {
+            steps {
+                echo "$APP_ENV"
+            }
+        }
+    }
+}
+'''
+'''
+pipeline {
+    agent any
+    environment {
+        APP_ENV = 'staging'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                echo "build ho raha hai"
+                echo "Current Environment is: ${APP_ENV}"
+            }
+        }
+    }
+    post {
+        always {
+           echo "Pipeline execution completed" 
+        }
+        success {
+            echo "Build passed!"
+        }
+        failure {
+            echo "Build failed, check logs"
+        }
+    }
+}
+'''
