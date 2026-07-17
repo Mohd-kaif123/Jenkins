@@ -184,44 +184,51 @@ pipeline {
         }
     }
 }
-'''
+
 
 pipeline {
     agent any
     stages {
         stage('checkout') {
-            when {
-                branch 'main'
-            }
+            // Yahan se 'when' block hata diya taaki checkout har branch pe ho
             steps {
-                sh 'git checkout'
+                sh 'git status'
                 echo "checkout from git"
             }
         }
         stage('Install Dependencies') {
             steps {
-                sh 'sudo apt install nginx'
+                sh 'npm install'
             }
         }
         stage('Run Test') {
             steps {
                 echo "Run karo aur Test karo"
+                sh 'npm test'
             }
         }
         stage('Build Docker Image') {
             steps {
-                sh 'sudo docker build -t myapp'
+                // 'myapp' aur '.' ke beech mein space add kiya
+                sh 'sudo docker build -t myapp .'
             }
         }
         stage('Push to Registry') {
             steps {
-                sh 'sudo push docker repo'
+                sh 'docker push myapp'
             }
         }
         stage('Deploy') {
+            // Task ke mutabik 'when' block ko sahi jagah (Deploy stage mein) lagaya
+            when {
+                branch 'main'
+            }
             steps {
-                sh 'push main branch only'
+                sh './deploy.sh'
+                echo "Deploy successfully"
             }
         }
     }
 }
+'''
+
