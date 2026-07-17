@@ -185,3 +185,43 @@ pipeline {
     }
 }
 '''
+
+pipeline {
+    agent any
+    stages {
+        stage('checkout') {
+            when {
+                branch 'main'
+            }
+            steps {
+                sh 'git checkout'
+                echo "checkout from git"
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                sh 'sudo apt install nginx'
+            }
+        }
+        stage('Run Test') {
+            steps {
+                echo "Run karo aur Test karo"
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh 'sudo docker build -t myapp'
+            }
+        }
+        stage('Push to Registry') {
+            steps {
+                sh 'sudo push docker repo'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'push main branch only'
+            }
+        }
+    }
+}
