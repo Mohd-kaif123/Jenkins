@@ -230,5 +230,67 @@ pipeline {
         }
     }
 }
+
+
+pipeline {
+    agent any
+    environment {
+        DOCKER_CREDS = credentials('docker-hub-creds')
+    }
+    stages {
+        stage('docker login') {
+            steps{
+                sh "echo \"\$DOCKER_CREDS_PSW\" | docker login -u \"\$DOCKER_CREDS_USR\" --password-stdin"
+            }
+        }
+    }
+}
+
+pipeline {
+    agent none
+    
+    stages {
+        stage('Checkout') {
+            agent any
+            
+            steps {
+                echo "Checking out code on an available agent..."
+            }
+        }
+        
+        stage('Build and Test') {
+            agent {
+                label 'linux-heavy-node'
+            }
+            steps {
+                echo "Running heavy build on Linux node..."
+            }
+        }
+    }
+}
 '''
 
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo "Build the application"
+            }
+        }
+        stage('unit Test and lint check') {
+            parallel {
+                stage('Unit Tests') {
+                    steps {
+                        echo "Unit tests is done"
+                    }
+                }
+                stage('Lint check') {
+                    steps {
+                        echo "Lint check is done"
+                    }
+                }
+            }
+        }
+    }
+}
